@@ -259,7 +259,8 @@ def write_id3(mp3_file, track, cover=None):
                        type=3, data=cover.data))
 
     t.tags.update_to_v23()
-    t.save(v1=id3.ID3v1SaveOptions.CREATE, v2_version=3)
+#id3.ID3v1SaveOptions.CREATE = 2
+    t.save(v1=2, v2_version=3)
 
 
 def print_track_info(track):
@@ -368,11 +369,11 @@ class AlbumCover:
 
 
 def download_cover(cover_uri, size):
-    if size <= 0:
+    if int(size) <= 0:
         return
 
     for n in COVER_SIZES:
-        if size <= n:
+        if int(size) <= n:
             break
     cover_url = 'https://' + cover_uri.replace('%%', '{0}x{0}'.format(n))
 
